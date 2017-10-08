@@ -1,0 +1,41 @@
+diff -burN a/math/unuran/Module.mk b/math/unuran/Module.mk
+--- a/math/unuran/Module.mk	2017-05-04 11:51:11.183466713 +0200
++++ b/math/unuran/Module.mk	2017-05-04 11:56:18.910742770 +0200
+@@ -33,7 +33,7 @@
+                 $(wildcard $(UNRDIRS)/src/uniform/*.c) \
+                 $(wildcard $(UNRDIRS)/src/urng/*.c)
+ else
+-UNRTARCONTENT:=$(subst $(UNRVERS),$(UNRDIRS),$(shell mkdir -p $(UNRDIR); cd $(UNRDIR); gunzip -c $(UNRSRCS) | tar tf -))
++UNRTARCONTENT:=
+ UNRS         := $(filter %.c, \
+                 $(filter $(UNRDIRS)/src/utils/%,$(UNRTARCONTENT)) \
+                 $(filter $(UNRDIRS)/src/methods/%,$(UNRTARCONTENT)) \
+@@ -86,12 +86,11 @@
+ ##### local rules #####
+ .PHONY:         all-$(MODNAME) clean-$(MODNAME) distclean-$(MODNAME)
+ 
+-include/%.h: 	$(UNURANDIRI)/%.h $(UNURANETAG)
++include/%.h: 	$(UNURANDIRI)/%.h
+ 		cp $< $@
+ 
+ ifeq ($(BUILTINUNURAN),yes)
+ 
+-$(UNURANDEP):   $(UNRCFG)
+ $(UNRS):        $(UNURANETAG)
+ 
+ $(UNURANETAG):	$(UNRSRCS)
+@@ -143,12 +142,12 @@
+ 
+ endif
+ 
+-$(UNURANLIB):   $(UNRCFG) $(UNRO) $(UNURANO) $(UNURANDO) $(ORDER_) \
++$(UNURANLIB):   $(UNURANO) $(UNURANDO) $(ORDER_) \
+                 $(MAINLIBS) $(UNURANLIBDEP)
+ 		@$(MAKELIB) $(PLATFORM) $(LD) "$(LDFLAGS)"  \
+ 		   "$(SOFLAGS)" libUnuran.$(SOEXT) $@     \
+ 		   "$(UNURANO) $(UNURANDO)"             \
+-		   "$(UNURANLIBEXTRA) $(UNRO)"
++		   "$(UNURANLIBEXTRA) -lunuran"
+ 
+ $(call pcmrule,UNURAN)
+ 	$(noop)
