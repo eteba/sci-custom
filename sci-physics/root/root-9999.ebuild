@@ -189,13 +189,14 @@ pkg_setup() {
 
 src_prepare() {
 	epatch \
-#		"${FILESDIR}"/${PN}-5.28.00b-glibc212.patch \
-#		"${FILESDIR}"/${PN}-5.32.00-afs.patch \
+		"${FILESDIR}"/${PN}-5.28.00b-glibc212.patch \
+		"${FILESDIR}"/${PN}-5.32.00-afs.patch \
 		"${FILESDIR}"/${PN}-5.32.00-cfitsio.patch \
 		"${FILESDIR}"/${PN}-5.32.00-chklib64.patch \
-#		"${FILESDIR}"/${PN}-5.34.13-unuran.patch \
+		"${FILESDIR}"/${PN}-5.34.13-unuran.patch \
 		"${FILESDIR}"/${PN}-6.00.01-dotfont.patch \
-		"${FILESDIR}"/${PN}-6.06.00-nobyte-compile.patch
+		"${FILESDIR}"/${PN}-6.06.00-nobyte-compile.patch \
+		"${FILESDIR}"/${PN}-6.04.06-prop-flags.patch
 #		"${FILESDIR}"/${PN}-6.00.01-llvm.patch
 
 	eapply_user
@@ -318,7 +319,7 @@ src_configure() {
 			$(use_enable math roofit)
 			$(use_enable math tmva)
 			$(use_enable math vc)
-			$(use_enable math vdt)
+#			$(use_enable math vdt)
 			$(use_enable math unuran)
 			$(use_enable mysql)
 			$(usex mysql \
@@ -347,6 +348,9 @@ src_configure() {
 }
 
 src_compile() {
+	# Write access to /dev/random is required to run root.exe
+	# More information at https://sft.its.cern.ch/jira/browse/ROOT-8146
+	addwrite /dev/random
 	emake \
 		OPT="${CXXFLAGS}" \
 		F77OPT="${FFLAGS}" \
@@ -398,10 +402,6 @@ cleanup_install() {
 }
 
 src_install() {
-	# Write access to /dev/random is required to run root.exe
-	# More information at https://sft.its.cern.ch/jira/browse/ROOT-8146
-	addwrite /dev/random
-
 	DOCS=($(find README/* -maxdepth 1 -type f))
 	default
 	dodoc README.md

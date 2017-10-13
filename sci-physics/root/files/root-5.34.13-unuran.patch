@@ -34,7 +34,7 @@ diff -burN a/math/unuran/Module.mk b/math/unuran/Module.mk
  		@$(MAKELIB) $(PLATFORM) $(LD) "$(LDFLAGS)"  \
  		   "$(SOFLAGS)" libUnuran.$(SOEXT) $@     \
  		   "$(UNURANO) $(UNURANDO)"             \
--		   "$(UNURANLIBEXTRA) $(UNRO)"
+-		   "$(UNRO) $(UNURANLIBEXTRA)"
 +		   "$(UNURANLIBEXTRA) -lunuran"
  
  $(call pcmrule,UNURAN)
