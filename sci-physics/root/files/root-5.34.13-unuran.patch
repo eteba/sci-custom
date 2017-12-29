@@ -1,7 +1,8 @@
-diff -burN a/math/unuran/Module.mk b/math/unuran/Module.mk
---- a/math/unuran/Module.mk	2017-05-04 11:51:11.183466713 +0200
-+++ b/math/unuran/Module.mk	2017-05-04 11:56:18.910742770 +0200
-@@ -33,7 +33,7 @@
+diff --git a/math/unuran/Module.mk b/math/unuran/Module.mk
+index 00a530b..7cd22dc 100644
+--- a/math/unuran/Module.mk
++++ b/math/unuran/Module.mk
+@@ -31,7 +31,7 @@ UNRS         := $(wildcard $(UNRDIRS)/src/utils/*.c) \
                  $(wildcard $(UNRDIRS)/src/uniform/*.c) \
                  $(wildcard $(UNRDIRS)/src/urng/*.c)
  else
@@ -10,7 +11,7 @@ diff -burN a/math/unuran/Module.mk b/math/unuran/Module.mk
  UNRS         := $(filter %.c, \
                  $(filter $(UNRDIRS)/src/utils/%,$(UNRTARCONTENT)) \
                  $(filter $(UNRDIRS)/src/methods/%,$(UNRTARCONTENT)) \
-@@ -86,12 +86,11 @@
+@@ -81,10 +81,9 @@ INCLUDEFILES += $(UNURANDEP)
  ##### local rules #####
  .PHONY:         all-$(MODNAME) clean-$(MODNAME) distclean-$(MODNAME)
  
@@ -18,15 +19,13 @@ diff -burN a/math/unuran/Module.mk b/math/unuran/Module.mk
 +include/%.h: 	$(UNURANDIRI)/%.h
  		cp $< $@
  
- ifeq ($(BUILTINUNURAN),yes)
- 
 -$(UNURANDEP):   $(UNRCFG)
  $(UNRS):        $(UNURANETAG)
  
  $(UNURANETAG):	$(UNRSRCS)
-@@ -143,12 +142,12 @@
- 
- endif
+@@ -137,12 +136,12 @@ $(UNRCFG):	$(UNURANETAG)
+ 		GNUMAKE=$(MAKE) ./configure  CC="$$ACC"  \
+ 		CFLAGS="$$ACFLAGS");
  
 -$(UNURANLIB):   $(UNRCFG) $(UNRO) $(UNURANO) $(UNURANDO) $(ORDER_) \
 +$(UNURANLIB):   $(UNURANO) $(UNURANDO) $(ORDER_) \
@@ -34,8 +33,8 @@ diff -burN a/math/unuran/Module.mk b/math/unuran/Module.mk
  		@$(MAKELIB) $(PLATFORM) $(LD) "$(LDFLAGS)"  \
  		   "$(SOFLAGS)" libUnuran.$(SOEXT) $@     \
  		   "$(UNURANO) $(UNURANDO)"             \
--		   "$(UNRO) $(UNURANLIBEXTRA)"
+-		   "$(UNURANLIBEXTRA) $(UNRO)"
 +		   "$(UNURANLIBEXTRA) -lunuran"
  
- $(call pcmrule,UNURAN)
- 	$(noop)
+ $(UNURANDS):    $(UNRINIT) $(UNURANDH1) $(UNURANL) $(ROOTCINTTMPDEP)
+ 		$(MAKEDIR)
