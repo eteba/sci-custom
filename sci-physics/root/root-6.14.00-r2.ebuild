@@ -295,19 +295,8 @@ src_install() {
 
 	pushd "${D}/${ROOTSYS}" > /dev/null
 
-        echo "ROOTENV: "; echo "${ROOTENV}"
-        echo "MANPATH: "; echo "${MANPATH}"
-        echo "PATH: "; echo "${PATH}"
-        echo "ROOTPATH: "; echo "${ROOTPATH}"
-        echo "LDPATH: "; echo "${LDPATH}"
-        echo "PUSHD to... "; echo "${D}/${ROOTSYS}"
-
 	if use emacs; then
 		elisp-install ${PN}-$(ver_cut 1-2) "${BUILD_DIR}"/root-help.el
-	fi
-
-	if ! use gdml; then
-		rm -r geom || die
 	fi
 
 	if ! use examples; then
@@ -320,8 +309,4 @@ src_install() {
 
 	# clean up unnecessary files from installation
 	rm -r config emacs etc/vmc || die
-
-        if use gdml; then
-		die
-	fi
 }
