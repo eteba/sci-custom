@@ -320,4 +320,8 @@ src_install() {
 
 	# clean up unnecessary files from installation
 	rm -r config emacs etc/vmc || die
+
+        if use gdml; then
+		die
+	fi
 }
