@@ -295,8 +295,12 @@ src_install() {
 
 	pushd "${D}/${ROOTSYS}" > /dev/null
 
-        echo "(KIKE) PWD:"
-        pwd
+        echo "ROOTENV: "; echo "${ROOTENV}"
+        echo "MANPATH: "; echo "${MANPATH}"
+        echo "PATH: "; echo "${PATH}"
+        echo "ROOTPATH: "; echo "${ROOTPATH}"
+        echo "LDPATH: "; echo "${LDPATH}"
+        echo "PUSHD to... "; echo "${D}/${ROOTSYS}"
 
 	if use emacs; then
 		elisp-install ${PN}-$(ver_cut 1-2) "${BUILD_DIR}"/root-help.el
