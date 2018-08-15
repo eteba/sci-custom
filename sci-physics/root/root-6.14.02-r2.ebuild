@@ -298,10 +298,6 @@ src_install() {
 		elisp-install ${PN}-$(ver_cut 1-2) "${BUILD_DIR}"/root-help.el
 	fi
 
-	if ! use gdml; then
-		rm -r geom || die
-	fi
-
 	if ! use examples; then
 		rm -r test tutorials || die
 	fi
